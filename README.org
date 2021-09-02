@@ -1,4 +1,4 @@
-* Rank2BinaryForms [[https://LauraBMo.github.io/Rank2BinaryForms/stable][https://img.shields.io/badge/docs-stable-blue.svg]] [[https://LauraBMo.github.io/Rank2BinaryForms/dev][https://img.shields.io/badge/docs-dev-blue.svg]] [[https://github.com/LauraBMo/Rank2BinaryForms/actions][https://github.com/LauraBMo/Rank2BinaryForms/workflows/CI/badge.svg]] [[https://codecov.io/gh/LauraBMo/Rank2BinaryForms][https://codecov.io/gh/LauraBMo/Rank2BinaryForms/branch/master/graph/badge.svg]]
+* Rank2BinaryForms [[https://LauraBMo.github.io/Rank2BinaryForms.jl/stable][https://img.shields.io/badge/docs-stable-blue.svg]] [[https://LauraBMo.github.io/Rank2BinaryForms.jl/dev][https://img.shields.io/badge/docs-dev-blue.svg]] [[https://github.com/LauraBMo/Rank2BinaryForms.jl/actions][https://github.com/LauraBMo/Rank2BinaryForms/workflows/CI/badge.svg]] [[https://codecov.io/gh/LauraBMo/Rank2BinaryForms.jl][https://codecov.io/gh/LauraBMo/Rank2BinaryForms/branch/master/graph/badge.svg]]
 
 Package to compute the roots of the polynomials in the image of the map \Gamma defined in [[https://arxiv.org/abs/1901.08320][ArXiv 1901.08320]].
 Computes the list (up to a linear change of coordinates) of binary forms (homogeneous polynomials of two variables) with Waring rank two.
@@ -96,7 +96,7 @@ Image_affineGamma(6)
 
 The list of polynomials can be easily obtain from the list of roots using your favorite implementation of polynomials in julia.
 
-For example, using julia's [[https://docs.julialang.org/en/v1/manual/metaprogramming/#Symbols][Symbols]] (polynomials computed with this method should be compatible with [[https://github.com/chakravala/Reduce.jl][Reduce.jl]])
+For example, using julia's [[https://docs.julialang.org/en/v1/manual/metaprogramming/#Symbols][Symbols]] (polynomials obtained with this method should be compatible with [[https://github.com/chakravala/Reduce.jl][Reduce.jl]])
 
 #+begin_src julia
 vars = [:x, :y];
