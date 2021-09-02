@@ -81,7 +81,9 @@ $(SIGNATURES)
 Returns a vector of vectors resulting to `pushfirst` each integer `1:d` in `triplet`.
 """
 tuples(d) = triplet -> [[i, triplet...] for i in 1:d if !(i in triplet)]
+# Add zero and one as roots
 # tuples(d) = triplet -> [[i, triplet...] for i in 1:d if !(i == last(triplet))]
+# Add all the roots, if type has an infinity value.
 # tuples(d) = triplet -> [[i, triplet...] for i in 1:d]
 
 #################################
