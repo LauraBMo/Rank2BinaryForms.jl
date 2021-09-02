@@ -106,7 +106,7 @@ $(SIGNATURES)
 
 Returns a function that computes the unknown roots of the polynomial `Γ(triplet)`.
 """
-affineGamma(d) = triplet -> -1 .* ithroot(d).(tuples(d)(triplet))
+affineGamma(d) = triplet -> ithroot(d).(tuples(d)(triplet))
 
 """
 $(SIGNATURES)
