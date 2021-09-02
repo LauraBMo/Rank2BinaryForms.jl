@@ -1,7 +1,7 @@
 name = "Rank2BinaryForms"
 uuid = "e83c4f86-926c-40f1-8a17-25e316e7ef75"
 authors = ["Laura Brustenga i Moncusí <brust@math.ku.dk>, Shreedevi K. Masuti and contributors"]
-version = "0.1.0"
+version = "1.0.0"
 
 [deps]
 Combinatorics = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
