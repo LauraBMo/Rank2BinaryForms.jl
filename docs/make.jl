@@ -5,7 +5,7 @@ DocMeta.setdocmeta!(Rank2BinaryForms, :DocTestSetup, :(using Rank2BinaryForms); 
 
 makedocs(;
     modules=[Rank2BinaryForms],
-    authors="Laura Brustenga i Moncusí <brust@math.ku.dk> and contributors",
+    authors="Laura Brustenga i Moncusí <brust@math.ku.dk>, Shreedevi K. Masuti and contributors",
     repo="https://github.com/LauraBMo/Rank2BinaryForms.jl/blob/{commit}{path}#{line}",
     sitename="Rank2BinaryForms.jl",
     format=Documenter.HTML(;

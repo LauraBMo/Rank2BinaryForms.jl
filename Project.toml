@@ -1,9 +1,17 @@
 name = "Rank2BinaryForms"
 uuid = "e83c4f86-926c-40f1-8a17-25e316e7ef75"
-authors = ["Laura Brustenga i Moncusí <brust@math.ku.dk> and contributors"]
+authors = ["Laura Brustenga i Moncusí <brust@math.ku.dk>, Shreedevi K. Masuti and contributors"]
 version = "0.1.0"
 
+[deps]
+Combinatorics = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
+DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
+Nemo = "2edaba10-b0f1-5616-af89-8c11ac63239a"
+
 [compat]
+Combinatorics = "1"
+DocStringExtensions = "0.8"
+Nemo = ">= 0.24.0"
 julia = "1"
 
 [extras]
