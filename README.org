@@ -1,15 +1,21 @@
 #+TITLE: README of Rank2BinaryForms.jl
 #+DATE: 25 Sep 2021
 #+LANGUAGE: en
-#+OPTIONS: toc:2
+#+OPTIONS: toc:nil
+
 
 * Rank2BinaryForms [[https://LauraBMo.github.io/Rank2BinaryForms.jl/stable][https://img.shields.io/badge/docs-stable-blue.svg]] [[https://LauraBMo.github.io/Rank2BinaryForms.jl/dev][https://img.shields.io/badge/docs-dev-blue.svg]] [[https://github.com/LauraBMo/Rank2BinaryForms.jl/actions][https://github.com/LauraBMo/Rank2BinaryForms.jl/workflows/CI/badge.svg]] [[https://codecov.io/gh/LauraBMo/Rank2BinaryForms.jl][https://codecov.io/gh/LauraBMo/Rank2BinaryForms.jl/branch/master/graph/badge.svg]]
 
 Package to compute the roots of the polynomials in the image of the map \Gamma defined in [[https://arxiv.org/abs/1901.08320][ArXiv 1901.08320]].
 Computes the list (up to a linear change of coordinates) of binary forms (homogeneous polynomials of two variables) with Waring rank two.
 
+** Table of contents :TOC:
+- [[#rank2binaryforms-httpsimgshieldsiobadgedocs-stable-bluesvg-httpsimgshieldsiobadgedocs-dev-bluesvg-httpsgithubcomlaurabmorank2binaryformsjlworkflowscibadgesvg-httpscodecovioghlaurabmorank2binaryformsjlbranchmastergraphbadgesvg][Rank2BinaryForms https://img.shields.io/badge/docs-stable-blue.svg https://img.shields.io/badge/docs-dev-blue.svg https://github.com/LauraBMo/Rank2BinaryForms.jl/workflows/CI/badge.svg https://codecov.io/gh/LauraBMo/Rank2BinaryForms.jl/branch/master/graph/badge.svg]]
+  - [[#dependencies][Dependencies]]
+  - [[#install][Install]]
+  - [[#examples-of-use][Examples of use]]
 
-* Dependencies
+** Dependencies
 
 - Nemo >= 0.24.0 (for Algebraic Numbers =QQBar=)
 
@@ -20,15 +26,15 @@ import Pkg
 Pkg.add(url="https://github.com/Nemocas/Nemo.jl.git")
 #+end_src
 
-* Install
+** Install
 
 #+begin_src julia
 import Pkg
 Pkg.add("Rank2BinaryForms")
 #+end_src
 
-* Examples of use
-** Basic use
+** Examples of use
+*** Basic use
 
 #+begin_src julia
 using Rank2BinaryForms
@@ -51,7 +57,7 @@ roots_list = Image_affineGamma(6)
 [Root -0.333333 of 3x + 1, Root -0.500000 of 2x + 1, Root -0.666667 of 3x + 2]
 #+end_src
 
-** Using other fields
+*** Using other fields
 
 Other fields can be used with =set_getting_rootsofunity(f)=, a function setting how to compute the =d=-th roots of unity. The function =f= computing the roots of unity must accept calls as =f(d)(k)=, returning the =k=-th root of the =d=-th roots of unity. The order of the =d=-th roots of unity can be clockwise or anti-clockwise, but they must be ordered. This package should be generic enough to accept a wide variety of numbers types as output for =f=, which will be the type of the roots.
 
@@ -97,7 +103,7 @@ Image_affineGamma(6)
 [[-0.33333333333333333 +/- 4.41e-18] + [+/- 1.10e-18]*im, [-0.50000000000000000 +/- 1.54e-18] + [+/- 1.50e-18]*im, [-0.66666666666666667 +/- 6.68e-18] + [+/- 3.28e-18]*im]
 #+end_src
 
-** Building the polynomials
+*** Building the polynomials
 
 The list of polynomials can be easily obtain from the list of roots using your favorite implementation of polynomials in julia.
 
