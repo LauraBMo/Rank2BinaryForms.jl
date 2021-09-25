@@ -12,7 +12,7 @@
 
 <a id="org652f802"></a>
 
-# Rank2BinaryForms [![img](https://img.shields.io/badge/docs-stable-blue.svg)](https://LauraBMo.github.io/Rank2BinaryForms.jl/stable) [![img](https://img.shields.io/badge/docs-dev-blue.svg)](https://LauraBMo.github.io/Rank2BinaryForms.jl/dev) [![img](https://github.com/LauraBMo/Rank2BinaryForms/workflows/CI/badge.svg)](https://github.com/LauraBMo/Rank2BinaryForms.jl/actions) [![img](https://codecov.io/gh/LauraBMo/Rank2BinaryForms/branch/master/graph/badge.svg)](https://codecov.io/gh/LauraBMo/Rank2BinaryForms.jl)
+# Rank2BinaryForms [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://LauraBMo.github.io/Rank2BinaryForms.jl/stable) [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://LauraBMo.github.io/Rank2BinaryForms.jl/dev) [![Build Status](https://github.com/LauraBMo/Rank2BinaryForms.jl/workflows/CI/badge.svg)](https://github.com/LauraBMo/Rank2BinaryForms.jl/actions) [![Coverage](https://codecov.io/gh/LauraBMo/Rank2BinaryForms.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/LauraBMo/Rank2BinaryForms.jl)
 
 Package to compute the roots of the polynomials in the image of the map &Gamma; defined in [ArXiv 1901.08320](https://arxiv.org/abs/1901.08320).
 Computes the list (up to a linear change of coordinates) of binary forms (homogeneous polynomials of two variables) with Waring rank two.
