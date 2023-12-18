@@ -1,9 +1,12 @@
+push!(LOAD_PATH, "$(homedir())/.julia/dev")
+
+const VERBOSE = true
 using Rank2BinaryForms
 using Test
 
 using Nemo
 
-@testset "Rank2BinaryForms.jl" begin
+@testset verbose = VERBOSE "Rank2BinaryForms.jl" begin
 
     @testset "Computing roots" begin
         i = Image_affineGamma(6)
@@ -19,7 +22,7 @@ using Nemo
         @test i[10] == QQBar.([fmpq(1 // 3), fmpq(1 // 2), fmpq(2 // 3)])
     end
 
-    @testset "Building polynomials" begin
+    @testset verbose = VERBOSE "Building polynomials" begin
         @testset "Symbols" begin
             i = affineGamma(6)([1,2,3])
             vars = [:x, :y];
@@ -69,5 +72,20 @@ using Nemo
             @test first(r3) == 0
             @test buildpolynomial(vars)(r3) == vars[1]^3 * vars[2] + vars[1]^2 * vars[2]^2
         end
+    end
+    @testset "Change variables" begin
+        r = 100;
+        n = 6;
+        v1 = matrix(QQ, rand(-r:r, n, 1));
+        v2 = matrix(QQ, rand(-r:r, n, 1));
+        v3 = matrix(QQ, rand(-r:r, n, 1));
+        v4 = matrix(QQ, rand(-r:r, n, 1));
+
+        N = reduce(hcat, (v1,v2,v3,v4))
+        nor_coeffs = matrix(ZZ, rand(-10:10, 4, 1))
+        u = N*nor_coeffs
+
+        @test normalize_coeffs(u, N) == nor_coeffs
+        @test normalize_mat(u, v1, v2, v3, v4) == N*Rank2BinaryForms.diagonal(nor_coeffs)
     end
 end

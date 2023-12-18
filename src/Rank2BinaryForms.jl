@@ -1,14 +1,50 @@
 module Rank2BinaryForms
 
-using Combinatorics:combinations
 using DocStringExtensions:SIGNATURES
 
 # Use at least Nemo 0.24.0
 # Install with
 # ] add https://github.com/Nemocas/Nemo.jl.git
-using Nemo
+import Nemo
+using Nemo:det
 
-export crossratio, affineGamma, Image_affineGamma, set_getting_rootsofunity, buildpolynomial
+
+import Combinatorics as CC
+# using Combinatorics:combinations
+
+include("Utils.jl")
+
+include("Geometry.jl")
+include("Tuples.jl")
+include("BaseChange.jl")
+include("Gammas.jl")
+
+using Requires
+
+function __init__()
+    @require Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80" begin
+        # import .HomotopyContinuation as HC
+        import .Plots as PP
+        @eval using Colors
+        # using Contour
+        @eval using RecipesBase
+        include("PlotUtils.jl")
+        include("PlotCircle.jl")
+        include("PlotPoints.jl")
+        include("PlotGamma.jl")
+        include("PlotURoots.jl")
+        include("PlotBoth.jl")
+        include("PlotTwo.jl")
+    end
+end
+
+# include("PlotConic.jl")
+
+# include("PlotRecpies.jl")
+
+
+# import MultivariatePolynomials as MP
+# include("Conic.jl")
 
 #################################
 #################################
@@ -16,7 +52,42 @@ export crossratio, affineGamma, Image_affineGamma, set_getting_rootsofunity, bui
 #################################
 #################################
 
-rootsofunity(d) = k -> Nemo.root_of_unity(QQBar, d, k)
+# Use Float64
+# rootsofunity(d, k) = exp((2*pi*im*k)/d)
+
+# Numbers should accept division by zero (that is, infinity. e.g., Float63, CalciumField).
+# Otherwise, do _not_ use functions in Gammas.jl
+const BASE_FIELD = Ref{Nemo.Field}()
+
+# const BASE_FIELD = Ref{Nemo.Field}(Nemo.CalciumField(extended = true))
+# const BASE_FIELD = Nemo.CalciumField(extended = true)
+
+function set_base_field(field)
+    BASE_FIELD[] = field
+    @eval const FUNDAMENTAL = Ref{Matrix{Nemo.MatElem{typeof(Nemo.one(BASE_FIELD[]))}}}()
+    FUNDAMENTAL[] = bc_fundamental()
+    return field
+end
+
+const DEGREE = Ref{Int}(5)
+
+function set_degree(degree)
+    DEGREE[] = degree
+end
+
+# To be used w/ CalciumField.
+function rootsofunity(d, k)
+    num = BASE_FIELD[](2*(k-1))*Nemo.const_pi(BASE_FIELD[])*Nemo.onei(BASE_FIELD[])
+    den = BASE_FIELD[](d)
+    expo = num // den
+    return exp(expo)
+end
+
+# const CField = Nemo.QQBar
+# rootsofunity(d, k) = Nemo.root_of_unity(CField, d, i)
+
+# const CField = Nemo.ComplexField(64)
+# rootsofunity(d, k) = Nemo.root_of_unity(CC, d)^k
 
 const ROOTS_OF_UNITY = Ref{Function}(rootsofunity)
 
@@ -27,125 +98,19 @@ Sets the method used to compute the `d`-th roots of unity. The input is a functi
 Examples of valid inputs are the following functions `f` and `g`:
 
 ```julia
-    g(d) = k -> exp(2*pi*im*k/d)
+    g(d, k) = exp(2*pi*im*k/d)
+    set_getting_rootsofunity(g)
+```
+
+```julia
     using Nemo
     CC = ComplexField(64);
-    f(d) = k -> Nemo.root_of_unity(CC, d)^k;
+    f(d, k) = Nemo.root_of_unity(CC, d)^k;
+    set_getting_rootsofunity(f)
 ```
 """
 function set_getting_rootsofunity(f)
     ROOTS_OF_UNITY[] = f
 end
-
-## Other ways to get the roots of unity
-# CC = ComplexField(64)
-# g(d) = k -> Nemo.root_of_unity(CC, d)^k
-# set_getting_rootsofunity(g)
-#
-# f(d) = k -> exp(2*pi*im*k/d)
-# set_getting_rootsofunity(f)
-
-
-#################################
-#################################
-# Cross ratio
-#################################
-#################################
-"""
-$(SIGNATURES)
-
-Returns the cross ratio of four numbers.
-There is also the method:
-
-    crossratio(v) = crossratio(v...)
-"""
-crossratio(A, B, C, D) = (A - B) * (C - D) * inv((A - D) * (C - B))
-crossratio(v) = crossratio(v...)
-
-#################################
-#################################
-# Triplets and 4-tuples
-#################################
-#################################
-
-"""
-$(SIGNATURES)
-
-Returns a vector of triplets `[i,j,k]` of integers `1 <= i < j < k <= d`, up to the action of the `d`-th dihedral group.
-"""
-triplets(d) = map(pair -> pushfirst!(pair, 1), combinations(2:d, 2))
-
-"""
-$(SIGNATURES)
-
-Returns a vector of vectors resulting to `pushfirst` each integer `1:d` in `triplet`.
-"""
-tuples(d) = triplet -> [[i, triplet...] for i in 1:d if !(i in triplet)]
-# Add zero and one as roots
-# tuples(d) = triplet -> [[i, triplet...] for i in 1:d if !(i == last(triplet))]
-# Add all the roots, if type has an infinity value.
-# tuples(d) = triplet -> [[i, triplet...] for i in 1:d]
-
-#################################
-#################################
-# Define Gamma
-#################################
-#################################
-# Computing the i-th root of the polynomial image of Gamma
-# @noinlne not needed
-ithroot(d) = tuple -> crossratio(ROOTS_OF_UNITY[](d).(tuple))
-
-# function affineGamma(d, triplet)
-#     out = -1 .* ithroot(d).(tuples(d)(triplet))
-#     return  [zero(first(out)), one(first(out)), out...]
-# end
-# affineGamma(d) = triplet -> affineGamma(d, triplet)
-
-"""
-$(SIGNATURES)
-
-Returns a function that computes the unknown roots of the polynomial `Γ(triplet)`.
-"""
-affineGamma(d) = triplet -> ithroot(d).(tuples(d)(triplet))
-
-"""
-$(SIGNATURES)
-
-Returns the roots of all the polynomials in the image of `Γ`.
-"""
-Image_affineGamma(d) = affineGamma(d).(triplets(d))
-
-
-#################################
-#################################
-# Building the polynomials
-#################################
-#################################
-"""
-$(SIGNATURES)
-
-Generic function to build the polynomials in the image of `Γ` from the list of roots.
-"""
-function buildpolynomial(roots, vars)
-    x = first(vars)
-    y = last(vars)
-    out = x * y * (x + y)
-    for r in roots
-        out *= x - r * y
-    end
-    return out
-end
-
-function buildpolynomial(roots, vars::Vector{Symbol})
-    x = first(vars)
-    y = last(vars)
-    out = Expr(:call, :*, x, y, Expr(:call, :+, x, y))
-    for r in roots
-        out = Expr(:call, :*, out, Expr(:call, :-, x, Expr(:call, :*, r, y)))
-    end
-    return out
-end
-
-buildpolynomial(vars) = roots -> buildpolynomial(roots, vars)
 
 end
