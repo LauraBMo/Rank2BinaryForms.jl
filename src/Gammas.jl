@@ -16,8 +16,6 @@ function gamma(L)
     end
 end
 
-gamma_image(L) = gamma(L).(standard_triplets())
-
 #################################
 #################################
 # Define Gamma for L = [[0,1], [1,0], [1,1]]
@@ -43,6 +41,8 @@ $(SIGNATURES)
 
 Returns the roots of all the polynomials in the image of `Γ`.
 """
+gamma_image(L) = gamma(L).(standard_triplets())
+
 gamma_image() = gamma().(standard_triplets())
 
 get_noncommonroots((poly, I)) = [poly[i] for i in notin(I, eachindex(poly))]

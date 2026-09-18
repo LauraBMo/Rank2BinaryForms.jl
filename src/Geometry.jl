@@ -27,7 +27,8 @@ homofy!(v) = pushfirst!(v, one(first(v)))
 
 homofy(ξ) = homofy!([ξ])
 
-uroot(k::Int) = ROOTS_OF_UNITY[](DEGREE[], k)
+uroot(d::Int, k::Int) = ROOTS_OF_UNITY[](d, k)
+uroot(k::Int) = uroot(DEGREE[], k)
 
 """
 $(SIGNATURES)

@@ -6,20 +6,21 @@
 """
 $(SIGNATURES)
 
-Returns a vector with all the standard triplets of integers `[1,j,k]` with `1 < j < k <= d`.
+Returns all the standard triplets, that is all triplets of integers `[1,j,k]` with `1 < j < k <= d`.
 """
-standard_triplets() = pushfirst!.(CC.combinations(2:DEGREE[], 2), 1)
+standard_triplets(d = DEGREE[]) = [[1, j, k] for (j, k) in CC.combinations(2:d, 2)]
+# standard_triplets(d = DEGREE[]) = pushfirst!.(CC.combinations(2:d, 2), 1)
 
-length_stdtt() = binomial(DEGREE[]-1, 2)
+length_stdtt(d = DEGREE[]) = binomial(d-1, 2)
 # length(standard_triplets())
 
 """
 $(SIGNATURES)
 
-Returns a function on the standard triplets of integers `I`, which returns tuples `[[i, I...]` for `i` in `1:d` but not in `I`.
+Returns a function taking standard triplets `I` and returing all tuples `[i, I...]` for `i` in `1:d` but not in `I`.
 """
-function four_tuples()
-    return I -> Iterators.map(i -> pushfirst!(I, i), notin(I, 1:DEGREE[]))
+function four_tuples(d = DEGREE[])
+    return I -> map(i -> pushfirst!(I, i), notin(I, 1:d))
 end
 
 # rotation(a) = [cos(a) sin(a);  -sin(a) cos(a)]

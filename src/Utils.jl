@@ -1,5 +1,5 @@
 
-notin(I, iter) = Iterators.filter(i -> !(i in I), iter)
+notin(I, iter) = filter(i -> !(i in I), iter)
 
 function getfirst(p, itr)
     for el in itr

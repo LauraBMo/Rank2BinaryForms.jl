@@ -5,8 +5,9 @@ using DocStringExtensions:SIGNATURES
 # Use at least Nemo 0.24.0
 # Install with
 # ] add https://github.com/Nemocas/Nemo.jl.git
-import Nemo
-using Nemo:det
+# import Nemo
+# using Nemo:det
+using Nemo
 
 
 import Combinatorics as CC
@@ -18,6 +19,7 @@ include("Geometry.jl")
 include("Tuples.jl")
 include("BaseChange.jl")
 include("Gammas.jl")
+include("SymbolicMoebius.jl")
 
 using Requires
 
@@ -55,7 +57,7 @@ end
 # Use Float64
 # rootsofunity(d, k) = exp((2*pi*im*k)/d)
 
-# Numbers should accept division by zero (that is, infinity. e.g., Float63, CalciumField).
+# Numbers should accept division by zero (that is, infinity. e.g., Float64, CalciumField).
 # Otherwise, do _not_ use functions in Gammas.jl
 const BASE_FIELD = Ref{Nemo.Field}()
 
@@ -94,7 +96,7 @@ const ROOTS_OF_UNITY = Ref{Function}(rootsofunity)
 """
 $(SIGNATURES)
 
-Sets the method used to compute the `d`-th roots of unity. The input is a function `f` computing the roots of unity accepting calls as `f(d)(k)` and returning the `k`-th root of the `d`-th roots of unity. The order of the `d`-th roots of unity can be clockwise or anti-clockwise, but they must be ordered.
+Sets the method used to compute the `d`-th roots of unity. The input is a function `f` computing the roots of unity accepting calls as `f(d, k)` and returning the `k`-th root of the `d`-th roots of unity. The order of the `d`-th roots of unity can be clockwise or anti-clockwise, but they must be ordered.
 Examples of valid inputs are the following functions `f` and `g`:
 
 ```julia
